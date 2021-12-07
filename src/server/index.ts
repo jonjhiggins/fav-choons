@@ -1,8 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
-import { Pool } from 'pg'
-import db from './queries'
+import getUserDate from './routes/getUserDate'
 
 export default function server() {
     const app = express()
@@ -12,9 +11,7 @@ export default function server() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(helmet())
 
-    const pool = new Pool()
-
-    app.get('/user/:userId/:date', db.getUser.bind(null, pool))
+    app.get('/user/:userId/:date', getUserDate)
 
     app.listen(serverPort, () => {
         console.log(`App running on port ${serverPort}`)

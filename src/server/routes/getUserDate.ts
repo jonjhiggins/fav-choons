@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
-import { Pool } from 'pg'
+import db from '../db'
 
-async function getUser(
-    pool: Pool,
+export default async function getUserDate(
     { params: { userId, date } }: Request,
     response: Response
 ) {
@@ -16,7 +15,7 @@ async function getUser(
     }
     let rows = null
     try {
-        const result = await pool.query(
+        const result = await db.query(
             `SELECT 
             track.title as track,
             artist.title as artist
@@ -39,5 +38,3 @@ async function getUser(
     }
     return response.status(200).json(rows)
 }
-
-export default { getUser }
