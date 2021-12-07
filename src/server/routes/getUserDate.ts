@@ -2,7 +2,17 @@ import { isMatch } from 'date-fns'
 import { Request, Response } from 'express'
 import db from '../db'
 
-async function getValues(userIdInt: number, date: string) {
+async function getUserIdFromUsername(username: string) {
+    const query = `SELECT id FROM app_user WHERE username = $1`
+    try {
+        const result = await db.query(query, [username])
+        return { result: parseInt(result.rows[0].id, 10), error: null }
+    } catch (error) {
+        return { result: null, error }
+    }
+}
+
+async function getValues(userId: number, date: string) {
     const query = `SELECT 
     track.title as track,
     artist.title as artist
@@ -13,7 +23,7 @@ WHERE day_item.user_id = $1
 AND date = $2`
 
     try {
-        const result = await db.query(query, [userIdInt, date])
+        const result = await db.query(query, [userId, date])
         return { result, error: null }
     } catch (error) {
         return { result: null, error }
@@ -21,20 +31,26 @@ AND date = $2`
 }
 
 export default async function getUserDate(
-    { params: { userId, date } }: Request,
+    { params: { username, date } }: Request,
     response: Response
 ) {
-    const userIdInt = parseInt(userId, 10)
     const isValidDate = isMatch(date, 'yyyy-MM-dd') && date.length === 10
 
-    if (!userId || !userIdInt) {
-        return response.status(500).json({ error: 'Invalid userId' })
+    const { result: userId, error: userIdError } = await getUserIdFromUsername(
+        username
+    )
+
+    if (!userId) {
+        return response.status(404).json({ error: 'Could not find user' })
+    }
+    if (userIdError) {
+        return response.status(500).json({ error: userIdError })
     }
     if (!date || !isValidDate) {
         return response.status(500).json({ error: 'Invalid date' })
     }
 
-    const { result, error } = await getValues(userIdInt, date)
+    const { result, error } = await getValues(userId, date)
 
     if (error) {
         return response.status(500).json({ error })
@@ -42,7 +58,7 @@ export default async function getUserDate(
     if (!result || !result.rows || result.rows.length === 0) {
         return response
             .status(404)
-            .json({ error: 'Could not find user or tracks' })
+            .json({ error: 'Could not find tracks for this day' })
     }
     return response.status(200).json(result.rows)
 }

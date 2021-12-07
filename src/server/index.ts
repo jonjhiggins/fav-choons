@@ -11,7 +11,7 @@ export default function server() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(helmet())
 
-    app.get('/user/:userId/:date', getUserDate)
+    app.get('/user/:username/:date', getUserDate)
 
     app.listen(serverPort, () => {
         console.log(`App running on port ${serverPort}`)
