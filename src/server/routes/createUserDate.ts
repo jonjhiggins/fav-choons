@@ -1,16 +1,16 @@
 import { Request, Response } from 'express'
+import format from 'pg-format'
 import db from '../db'
 import userDateChecks from './userDateChecks'
 
-async function getValues(userId: number, date: string, tracks: string[]) {
-    const query = `INSERT into day_item(user_id, date, track_id)
-    VALUES
-        ($1, $2, $3),
-        ($1, $2, $4),
-        ($1, $2, $5);`
-
+async function insertValues(userId: number, date: string, tracks: string[]) {
+    const data = tracks.map((t) => [userId, date, t])
+    const query = format(
+        'INSERT into day_item(user_id, date, track_id) VALUES %L',
+        data
+    )
     try {
-        await db.query(query, [userId, date, tracks[0], tracks[1], tracks[2]])
+        await db.query(query)
         return { error: null }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -19,7 +19,14 @@ async function getValues(userId: number, date: string, tracks: string[]) {
 }
 
 export default async function createUserDate(
-    { params: { username, date }, body }: Request,
+    {
+        params: { username, date },
+        body,
+    }: Request<
+        { username: string; date: string },
+        Record<string, unknown>,
+        { tracks: string[] }
+    >,
     response: Response
 ) {
     const paramChecks = await userDateChecks(username, date)
@@ -29,7 +36,7 @@ export default async function createUserDate(
             .json({ error: paramChecks.error })
     }
 
-    const { error } = await getValues(paramChecks.userId, date, body.tracks)
+    const { error } = await insertValues(paramChecks.userId, date, body.tracks)
 
     if (error) {
         if (
