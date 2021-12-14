@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import getUserDate from './routes/getUserDate'
 import addTrackForDate from './routes/createUserDate'
+import getUser from './routes/getUser'
 
 export default function server() {
     const app = express()
@@ -12,7 +13,7 @@ export default function server() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(helmet())
 
-    // app.get('/user/:username', getUser)
+    app.get('/user/:username', getUser)
     // app.post('/user/:username', createUser)
     // app.put('/user/:username', updateUser)
     // app.delete('/user/:username', deleteUser)
