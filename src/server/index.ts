@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import getUserDate from './routes/getUserDate'
-import createUserDate from './routes/createUserDate'
+import addTrackForDate from './routes/createUserDate'
 
 export default function server() {
     const app = express()
@@ -18,7 +18,7 @@ export default function server() {
     // app.delete('/user/:username', deleteUser)
 
     app.get('/user/:username/:date', getUserDate)
-    app.post('/user/:username/:date', createUserDate)
+    app.post('/user/:username/:date', addTrackForDate)
     // app.put('/user/:username/:date', editUserDate)
     // app.delete('/user/:username/:date', deleteUserDate)
 
