@@ -1,12 +1,8 @@
-import { Request, Response } from 'express'
+import { Request } from 'express'
+import { StandardResponse } from '../../types/response'
+import { Track } from '../../types/track'
 import db from '../db'
 import userDateChecks from './userDateChecks'
-
-interface Track {
-    artist: string
-    title: string
-    spotifyId?: string
-}
 
 async function insertValues(
     userId: number,
@@ -30,13 +26,14 @@ async function insertValues(
             )
         INSERT INTO day_item (user_id, date, track_id)
         SELECT $3, $4, track_id FROM insert_track
+        RETURNING id
         `
     try {
-        await db.query(query, values)
-        return { error: null }
+        const result = await db.query(query, values)
+        return { error: null, result: result.rows[0].id }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-        return { error }
+        return { error, result: null }
     }
 }
 
@@ -49,22 +46,27 @@ export default async function addTrackForDate(
         Record<string, unknown>,
         { track: Track }
     >,
-    response: Response
+    response: StandardResponse<{ id: string }>
 ) {
     const paramChecks = await userDateChecks(username, date)
     if (!paramChecks.userId) {
         return response
             .status(paramChecks.statusCode || 500)
-            .json({ error: paramChecks.error })
+            .json({ ok: false, error: paramChecks.error })
     }
 
     if (!body || !body.track || !body.track.artist || !body.track.title) {
-        return response
-            .status(paramChecks.statusCode || 500)
-            .json({ error: 'Track data missing or not formatted correctly' })
+        return response.status(paramChecks.statusCode || 500).json({
+            ok: false,
+            error: 'Track data missing or not formatted correctly',
+        })
     }
 
-    const { error } = await insertValues(paramChecks.userId, date, body.track)
+    const { error, result } = await insertValues(
+        paramChecks.userId,
+        date,
+        body.track
+    )
 
     if (error) {
         if (
@@ -72,11 +74,12 @@ export default async function addTrackForDate(
             error.code === '23505' &&
             error.constraint === 'day_item_user_id_date_track_id_key'
         ) {
-            return response
-                .status(500)
-                .json({ error: 'Each track can only appear once for each day' })
+            return response.status(500).json({
+                ok: false,
+                error: 'Each track can only appear once for each day',
+            })
         }
-        return response.status(500).json({ error })
+        return response.status(500).json({ ok: false, error })
     }
-    return response.status(200).json({ result: 'Success' })
+    return response.status(200).json({ ok: true, data: { id: result } })
 }

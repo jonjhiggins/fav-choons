@@ -1,11 +1,31 @@
-export interface SuccessfulResponse<Data extends Record<string, unknown>> {
+import { Response } from 'express'
+
+type Input = {
+    [key: string]: unknown
+}
+
+export interface SuccessfulResponse<Data extends Input> {
     ok: true
     data: Data
-    error: undefined
 }
 
 export interface ErrorResponse {
     ok: false
-    data: undefined
     error: unknown
 }
+
+type StandardResponseTypes<T extends Input> =
+    | SuccessfulResponse<T>
+    | ErrorResponse
+
+type Send<ResBody = Record<string, unknown>, T = Response<ResBody>> = (
+    body: ResBody // eslint-disable-line no-unused-vars
+) => T
+
+interface CustomResponse<T> extends Response {
+    json: Send<T, this>
+}
+
+export type StandardResponse<T extends Input> = CustomResponse<
+    StandardResponseTypes<T>
+>
