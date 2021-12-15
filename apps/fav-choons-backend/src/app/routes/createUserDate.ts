@@ -26,15 +26,11 @@ async function insertValues(
             )
         INSERT INTO day_item (user_id, date, track_id)
         SELECT $3, $4, track_id FROM insert_track
+        ON CONFLICT (user_id, date, track_id) DO NOTHING
         RETURNING id
         `;
-  try {
-    const result = await db.query(query, values);
-    return { error: null, result: result.rows[0].id };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return { error, result: null };
-  }
+  const result = await db.query(query, values);
+  return { result: result.rows[0].id };
 }
 
 export default async function addTrackForDate(
@@ -62,24 +58,7 @@ export default async function addTrackForDate(
     });
   }
 
-  const { error, result } = await insertValues(
-    paramChecks.userId,
-    date,
-    body.track
-  );
+  const { result } = await insertValues(paramChecks.userId, date, body.track);
 
-  if (error) {
-    if (
-      'code' in error &&
-      error.code === '23505' &&
-      error.constraint === 'day_item_user_id_date_track_id_key'
-    ) {
-      return response.status(500).json({
-        ok: false,
-        error: 'Each track can only appear once for each day',
-      });
-    }
-    return response.status(500).json({ ok: false, error });
-  }
   return response.status(200).json({ ok: true, data: { id: result } });
 }

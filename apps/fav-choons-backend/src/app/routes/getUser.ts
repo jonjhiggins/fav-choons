@@ -19,14 +19,10 @@ export default async function getUser(
         GROUP BY date
         ORDER BY date DESC`;
 
-  try {
-    const result = await db.query(query, [username]);
-    const dates = result.rows.map(({ date }) => format(date, dateFormat));
-    return response.status(200).json({
-      data: { dates },
-      ok: true,
-    });
-  } catch (error) {
-    return response.status(500).json({ error, ok: false });
-  }
+  const result = await db.query(query, [username]);
+  const dates = result.rows.map(({ date }) => format(date, dateFormat));
+  return response.status(200).json({
+    data: { dates },
+    ok: true,
+  });
 }

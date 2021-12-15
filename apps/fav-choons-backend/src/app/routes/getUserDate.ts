@@ -18,12 +18,7 @@ INNER JOIN artist ON artist.id = artist_id
 WHERE day_item.user_id = $1
 AND date = $2;`;
 
-  try {
-    const result = await db.query(query, [userId, date]);
-    return { result, error: null };
-  } catch (error) {
-    return { result: null, error };
-  }
+  return await db.query(query, [userId, date]);
 }
 
 export default async function getUserDate(
@@ -36,11 +31,8 @@ export default async function getUserDate(
       .status(paramChecks.statusCode || 500)
       .json({ ok: false, error: paramChecks.error });
   }
-  const { result, error } = await getValues(paramChecks.userId, date);
+  const result = await getValues(paramChecks.userId, date);
 
-  if (error) {
-    return response.status(500).json({ ok: false, error });
-  }
   if (!result || !result.rows || result.rows.length === 0) {
     return response
       .status(404)
