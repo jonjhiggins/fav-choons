@@ -1,58 +1,40 @@
 {
-    "name": "fav-choons",
-    "version": "1.0.0",
-    "private": true,
-    "description": "",
-    "author": "",
-    "scripts": {
-        "dev": "npm run dev:server & npm run serve",
-        "dev:server": "nodemon --config .nodemonrc",
-        "build": "vue-cli-service build",
-        "build:server": "npm run lint:server && tsc",
-        "lint": "vue-cli-service lint",
-        "lint:server": "eslint src/server --ext .ts",
-        "lint:fix": "eslint . --ext .ts --fix",
-        "serve": "vue-cli-service serve",
-        "start:server": "npm run build:server && node dist/app.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "main": "dist/app.js",
-    "dependencies": {
-        "body-parser": "^1.19.0",
-        "core-js": "^3.6.5",
-        "date-fns": "^2.27.0",
-        "dotenv": "^10.0.0",
-        "express": "^4.17.1",
-        "helmet": "^4.6.0",
-        "pg": "^8.7.1",
-        "vue": "^3.0.0"
-    },
-    "devDependencies": {
-        "@types/express": "^4.17.13",
-        "@types/pg": "^8.6.1",
-        "@types/pg-format": "^1.0.2",
-        "@typescript-eslint/eslint-plugin": "^5.5.0",
-        "@typescript-eslint/parser": "^5.5.0",
-        "@vue/cli-plugin-babel": "~4.5.0",
-        "@vue/cli-plugin-eslint": "~4.5.0",
-        "@vue/cli-service": "~4.5.0",
-        "@vue/compiler-sfc": "^3.0.0",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^7.32.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-vue": "^7.0.0",
-        "nodemon": "^2.0.15",
-        "prettier": "^2.5.1",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.2"
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not dead"
-    ],
-    "_id": "fav-choons@1.0.0",
-    "license": "ISC",
-    "readme": "ERROR: No README data found!"
+  "name": "fav-choons",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test"
+  },
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "date-fns": "^2.27.0",
+    "express": "4.17.1",
+    "helmet": "^4.6.0",
+    "pg": "^8.7.1",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nrwl/cli": "12.10.1",
+    "@nrwl/eslint-plugin-nx": "12.10.1",
+    "@nrwl/express": "12.10.1",
+    "@nrwl/jest": "12.10.1",
+    "@nrwl/linter": "12.10.1",
+    "@nrwl/node": "12.10.1",
+    "@nrwl/tao": "12.10.1",
+    "@nrwl/workspace": "12.10.1",
+    "@types/express": "^4.17.13",
+    "@types/jest": "27.0.2",
+    "@types/node": "14.14.33",
+    "@typescript-eslint/eslint-plugin": "~4.31.1",
+    "@typescript-eslint/parser": "~4.31.1",
+    "eslint": "7.22.0",
+    "eslint-config-prettier": "8.1.0",
+    "jest": "27.2.3",
+    "prettier": "^2.3.1",
+    "ts-jest": "27.0.5",
+    "typescript": "~4.3.5"
+  }
 }
