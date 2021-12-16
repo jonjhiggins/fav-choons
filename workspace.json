@@ -8,12 +8,16 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/fav-choons-backend",
             "main": "apps/fav-choons-backend/src/main.ts",
             "tsConfig": "apps/fav-choons-backend/tsconfig.app.json",
-            "assets": ["apps/fav-choons-backend/src/assets"]
+            "assets": [
+              "apps/fav-choons-backend/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -37,17 +41,109 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/fav-choons-backend/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/fav-choons-backend/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/fav-choons-backend"],
+          "outputs": [
+            "coverage/apps/fav-choons-backend"
+          ],
           "options": {
             "jestConfig": "apps/fav-choons-backend/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "fav-choons-frontend": {
+      "projectType": "application",
+      "root": "apps/fav-choons-frontend",
+      "sourceRoot": "apps/fav-choons-frontend/src",
+      "targets": {
+        "build": {
+          "executor": "@nx-plus/vue:browser",
+          "options": {
+            "dest": "dist/apps/fav-choons-frontend",
+            "index": "apps/fav-choons-frontend/public/index.html",
+            "main": "apps/fav-choons-frontend/src/main.ts",
+            "tsConfig": "apps/fav-choons-frontend/tsconfig.app.json"
+          },
+          "configurations": {
+            "production": {
+              "mode": "production",
+              "filenameHashing": true,
+              "productionSourceMap": true,
+              "css": {
+                "extract": true,
+                "sourceMap": false
+              }
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nx-plus/vue:dev-server",
+          "options": {
+            "browserTarget": "fav-choons-frontend:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "fav-choons-frontend:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/fav-choons-frontend/**/*.{ts,tsx,vue}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/fav-choons-frontend"
+          ],
+          "options": {
+            "jestConfig": "apps/fav-choons-frontend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "fav-choons-frontend-e2e": {
+      "root": "apps/fav-choons-frontend-e2e",
+      "sourceRoot": "apps/fav-choons-frontend-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/fav-choons-frontend-e2e/cypress.json",
+            "devServerTarget": "fav-choons-frontend:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "fav-choons-frontend:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/fav-choons-frontend-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -59,14 +155,20 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/types/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/types/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/types"],
+          "outputs": [
+            "coverage/libs/types"
+          ],
           "options": {
             "jestConfig": "libs/types/jest.config.js",
             "passWithNoTests": true

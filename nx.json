@@ -30,6 +30,13 @@
     "fav-choons-backend": {
       "tags": []
     },
+    "fav-choons-frontend": {
+      "tags": []
+    },
+    "fav-choons-frontend-e2e": {
+      "tags": [],
+      "implicitDependencies": ["fav-choons-frontend"]
+    },
     "types": {
       "tags": []
     }
