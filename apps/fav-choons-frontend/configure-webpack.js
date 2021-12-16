@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 /*
  * Modify the webpack config by exporting an Object or Function.
  *
@@ -10,4 +11,10 @@
  *
  * https://cli.vuejs.org/config/#configurewebpack
  */
-module.exports = (config) => {};
+module.exports = {
+  plugins: [
+    new webpack.DefinePlugin({
+      API_URL: JSON.stringify(process.env.API_URL),
+    }),
+  ],
+};

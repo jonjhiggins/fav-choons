@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
+import * as cors from 'cors';
 import getUserDate from './app/routes/getUserDate';
 import addTrackForDate from './app/routes/createUserDate';
 import getUser from './app/routes/getUser';
@@ -10,6 +11,11 @@ const serverPort = 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+  })
+);
 app.use(helmet());
 
 app.get('/user/:username', getUser);
