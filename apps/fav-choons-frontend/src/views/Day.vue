@@ -34,7 +34,7 @@ export default Vue.extend({
   data: (): Data => ({ tracks: [], loading: true, errored: false }),
   mounted: function () {
     axios
-      .get(`${API_URL}/user/${this.$props.username}/${this.$props.date}`)
+      .get(`${API_URL}/user/${this.username}/${this.date}`)
       .then(({ data: response }: AxiosResponse<UserDateResponse>) => {
         if (!response.ok) {
           this.errored = true;
