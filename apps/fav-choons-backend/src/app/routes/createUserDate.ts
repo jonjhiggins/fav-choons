@@ -1,6 +1,8 @@
-import { Request } from 'express';
-import { StandardResponse } from '@fav-choons/types';
-import { Track } from '@fav-choons/types';
+import {
+  CreateUserDateJsonResponse,
+  CreateUserDateRequest,
+  Track,
+} from '@fav-choons/types';
 import db from '../db';
 import userDateChecks from './userDateChecks';
 
@@ -34,15 +36,8 @@ async function insertValues(
 }
 
 export default async function addTrackForDate(
-  {
-    params: { username, date },
-    body,
-  }: Request<
-    { username: string; date: string },
-    Record<string, unknown>,
-    { track: Track }
-  >,
-  response: StandardResponse<{ id: string }>
+  { params: { username, date }, body }: CreateUserDateRequest,
+  response: CreateUserDateJsonResponse
 ) {
   const paramChecks = await userDateChecks(username, date);
   if (!paramChecks.userId) {

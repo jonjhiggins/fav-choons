@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 // Response
 
@@ -59,6 +59,19 @@ export interface Track {
   title: string;
   spotifyId?: string;
 }
+
+// Add Track
+
+type CreateUserDate = { id: string };
+type CreateUserDateRequestParams = { username: string; date: string };
+type CreateUserDateRequestObject = { track: Track };
+export type CreateUserDateRequest = Request<
+  CreateUserDateRequestParams,
+  Record<string, unknown>,
+  CreateUserDateRequestObject
+>;
+export type CreateUserDateJsonResponse = StandardResponse<CreateUserDate>;
+export type CreateUserDateResponse = StandardResponseTypes<CreateUserDate>;
 
 export function types(): string {
   return 'types';
