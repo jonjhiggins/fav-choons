@@ -10,27 +10,38 @@
       >'s tracks on {{ date }}
     </h1>
     <ul v-if="!loading && !errored">
-      <li v-for="track in tracks" :key="track.track">
-        {{ track.artist }} - {{ track.track }}
+      <li v-for="track in tracks" :key="track.title">
+        {{ track.artist }} - {{ track.title }}
       </li>
     </ul>
     <p v-if="errored">Sorry, could not fetch data. Please try again later.</p>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { Track, UserDateResponse } from '@fav-choons/types';
+import { DataLoading } from '../types';
+
+interface Data extends DataLoading {
+  tracks: Track[];
+}
 
 export default Vue.extend({
   name: 'User',
-  props: ['username', 'date'],
-  data: () => ({ tracks: [], loading: true, errored: false }),
+  props: { username: String, date: String },
+  data: (): Data => ({ tracks: [], loading: true, errored: false }),
   mounted: function () {
     axios
       .get(`${API_URL}/user/${this.$props.username}/${this.$props.date}`)
-      .then(({ data: { data } }) => {
-        this.tracks = data.tracks;
+      .then(({ data: response }: AxiosResponse<UserDateResponse>) => {
+        if (!response.ok) {
+          this.errored = true;
+          console.log(response.error);
+          return;
+        }
+        this.tracks = response.data.tracks;
       })
       .catch((error) => {
         console.log(error);

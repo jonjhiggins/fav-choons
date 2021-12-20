@@ -6,6 +6,12 @@ Mainly for me to mess around with Postgres for the first time and build an API a
 
 This project was generated using [Nx](https://nx.dev).
 
+## Development
+
+Backend `nx serve fav-choons-backend`
+
+Front-end `nx serve fav-choons-frontend`
+
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Smart, Extensible Build Framework**

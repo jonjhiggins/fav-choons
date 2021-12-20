@@ -1,16 +1,11 @@
 import { Request } from 'express';
-import { StandardResponse } from '@fav-choons/types';
-import { Track } from '@fav-choons/types';
+import { UserDateJsonResponse } from '@fav-choons/types';
 import db from '../db';
 import userDateChecks from './userDateChecks';
 
-type UserDate = {
-  tracks: Track[];
-};
-
 async function getValues(userId: number, date: string) {
   const query = `SELECT 
-    track.title as track,
+    track.title as title,
     artist.title as artist
 FROM day_item
 INNER JOIN track ON track.id = track_id
@@ -23,7 +18,7 @@ AND date = $2;`;
 
 export default async function getUserDate(
   { params: { username, date } }: Request,
-  response: StandardResponse<UserDate>
+  response: UserDateJsonResponse
 ) {
   const paramChecks = await userDateChecks(username, date);
   if (!paramChecks.userId) {

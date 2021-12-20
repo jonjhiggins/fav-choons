@@ -28,9 +28,29 @@ interface CustomResponse<T> extends Response {
   json: Send<T, this>;
 }
 
-export type StandardResponse<T extends Input> = CustomResponse<
+type StandardResponse<T extends Input> = CustomResponse<
   StandardResponseTypes<T>
 >;
+
+// User
+
+type User = {
+  dates: Dates;
+};
+
+export type Dates = string[];
+
+export type UserJsonResponse = StandardResponse<User>;
+export type UserResponse = StandardResponseTypes<User>;
+
+// UserDate
+
+type UserDate = {
+  tracks: Track[];
+};
+
+export type UserDateJsonResponse = StandardResponse<UserDate>;
+export type UserDateResponse = StandardResponseTypes<UserDate>;
 
 // Track
 

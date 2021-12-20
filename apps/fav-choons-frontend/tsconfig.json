@@ -7,7 +7,7 @@
     "types": ["webpack-env", "node"],
     "strict": true
   },
-  "include": [],
+  "include": ["./global.d.ts"],
   "files": [],
   "references": [
     {

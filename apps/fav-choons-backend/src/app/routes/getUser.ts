@@ -1,16 +1,12 @@
 import { format } from 'date-fns';
 import { Request } from 'express';
-import { StandardResponse } from '@fav-choons/types';
+import { UserJsonResponse } from '@fav-choons/types';
 import { dateFormat } from '../constants';
 import db from '../db';
 
-type User = {
-  dates: string[];
-};
-
 export default async function getUser(
   { params: { username } }: Request,
-  response: StandardResponse<User>
+  response: UserJsonResponse
 ) {
   const query = `
         WITH select_username AS (SELECT id FROM app_user WHERE username = $1)
