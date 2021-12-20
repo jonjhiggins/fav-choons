@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav"><router-link to="/">Home</router-link> |</div>
-    <router-view />
+    <nav id="nav">
+      <h1><router-link to="/">fav choons</router-link></h1>
+    </nav>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 

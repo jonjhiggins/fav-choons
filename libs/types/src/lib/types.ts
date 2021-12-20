@@ -32,6 +32,14 @@ type StandardResponse<T extends Input> = CustomResponse<
   StandardResponseTypes<T>
 >;
 
+// Users
+type AllUser = {
+  username: string;
+};
+export type AllUsers = { users: AllUser[] };
+export type AllUsersJsonResponse = StandardResponse<AllUsers>;
+export type AllUsersResponse = StandardResponseTypes<AllUsers>;
+
 // User
 
 type User = {

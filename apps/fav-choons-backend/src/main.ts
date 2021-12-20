@@ -5,6 +5,7 @@ import * as cors from 'cors';
 import getUserDate from './app/routes/getUserDate';
 import addTrackForDate from './app/routes/createUserDate';
 import getUser from './app/routes/getUser';
+import getUsers from './app/routes/getUsers';
 
 const app = express();
 const serverPort = 3000;
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(helmet());
 
+app.get('/users', getUsers);
 app.get('/user/:username', getUser);
 // app.post('/user/:username', createUser)
 // app.put('/user/:username', updateUser)
