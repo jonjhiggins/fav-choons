@@ -1,33 +1,15 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="bg-rose-500 p-6 content-center font-sans shadow-lg rounded max-w-xl mx-auto my-6"
+  >
     <nav id="nav">
-      <h1><router-link to="/">fav choons</router-link></h1>
+      <h1 class="text-4xl text-center font-bold mt-3 mb-6">
+        <router-link to="/">fav choons</router-link>
+      </h1>
     </nav>
     <main>
       <router-view />
     </main>
   </div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>

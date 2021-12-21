@@ -1,8 +1,12 @@
 <template>
   <div>
-    <h1>Users</h1>
-    <ul v-if="!loading && !errored">
-      <li v-for="user in users" :key="user.username">
+    <h1 class="text-lg">Users</h1>
+    <ul v-if="!loading && !errored" class="grid gap-2 grid-cols-2">
+      <li
+        class="rounded shadow bg-white text-md p-4"
+        v-for="user in users"
+        :key="user.username"
+      >
         <router-link
           :to="{
             name: 'User',
