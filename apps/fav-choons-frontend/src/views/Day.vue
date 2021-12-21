@@ -1,35 +1,35 @@
 <template>
   <div>
-    <h1>
+    <page-header :heading="username + '\'s tracks on ' + date"></page-header>
+    <button-list :items="tracks" v-if="!loading && !errored"></button-list>
+    <p v-if="errored">Sorry, could not fetch data. Please try again later.</p>
+    <h3 class="text-md mt-6">
       <router-link
         :to="{
           name: 'User',
           params: { username },
         }"
-        >{{ username }}</router-link
-      >'s tracks on {{ date }}
-    </h1>
-    <ul v-if="!loading && !errored">
-      <li v-for="track in tracks" :key="track.title">
-        {{ track.artist }} - {{ track.title }}
-      </li>
-    </ul>
-    <p v-if="errored">Sorry, could not fetch data. Please try again later.</p>
+        >{{ username }}'s profile</router-link
+      >
+    </h3>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import axios, { AxiosResponse } from 'axios';
-import { Track, UserDateResponse } from '@fav-choons/types';
+import { UserDateResponse } from '@fav-choons/types';
 import { DataLoading } from '../types';
+import PageHeader from '../components/Page-Header.vue';
+import ButtonList, { ButtonListItem } from '../components/Button-List.vue';
 
 interface Data extends DataLoading {
-  tracks: Track[];
+  tracks: ButtonListItem[];
 }
 
 export default Vue.extend({
-  name: 'User',
+  name: 'Day',
+  components: { 'page-header': PageHeader, 'button-list': ButtonList },
   props: { username: String, date: String },
   data: (): Data => ({ tracks: [], loading: true, errored: false }),
   mounted: function () {
@@ -41,7 +41,11 @@ export default Vue.extend({
           console.log(response.error);
           return;
         }
-        this.tracks = response.data.tracks;
+        this.tracks = response.data.tracks.map((track) => ({
+          heading: `${track.artist} - ${track.title}`,
+          linkName: 'User',
+          linkParams: { username: this.username },
+        }));
       })
       .catch((error) => {
         console.log(error);

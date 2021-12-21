@@ -1,17 +1,10 @@
 <template>
   <div>
-    <h1>{{ username }}'s profile</h1>
-    <ul v-if="!loading && !errored && dates.length > 0">
-      <li v-for="date in dates" :key="date">
-        <router-link
-          :to="{
-            name: 'Day',
-            params: { username, date },
-          }"
-          >{{ date }}</router-link
-        >
-      </li>
-    </ul>
+    <page-header :heading="username + '\'s profile'"></page-header>
+    <button-list
+      :items="dates"
+      v-if="!loading && !errored && dates.length > 0"
+    ></button-list>
     <p v-if="!loading && !errored && dates.length === 0">
       Sorry, could not find any dates for user {{ username }}.
     </p>
@@ -24,12 +17,15 @@ import Vue from 'vue';
 import axios, { AxiosResponse } from 'axios';
 import { UserResponse, Dates } from '@fav-choons/types';
 import { DataLoading } from '../types';
+import PageHeader from '../components/Page-Header.vue';
+import ButtonList, { ButtonListItem } from '../components/Button-List.vue';
 
 interface Data extends DataLoading {
-  dates: Dates;
+  dates: ButtonListItem[];
 }
 
 export default Vue.extend({
+  components: { 'page-header': PageHeader, 'button-list': ButtonList },
   name: 'User',
   props: { username: String },
   data: (): Data => ({ dates: [], loading: true, errored: false }),
@@ -42,7 +38,11 @@ export default Vue.extend({
           console.log(response.error);
           return;
         }
-        this.dates = response.data.dates;
+        this.dates = response.data.dates.map((date) => ({
+          heading: date,
+          linkName: 'Day',
+          linkParams: { username: this.username, date },
+        }));
       })
       .catch((error) => {
         console.log(error);
