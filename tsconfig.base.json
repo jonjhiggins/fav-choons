@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@fav-choons/constants": ["libs/constants/src/index.ts"],
       "@fav-choons/types": ["libs/types/src/index.ts"]
     }
   },

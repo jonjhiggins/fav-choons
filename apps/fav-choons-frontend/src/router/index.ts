@@ -14,14 +14,20 @@ const routes: Array<RouteConfig> = [
     path: '/user/:username',
     name: 'User',
     props: true,
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/User.vue'),
+    component: () => import(/* webpackChunkName: "user" */ '../views/User.vue'),
   },
   {
     path: '/user/:username/:date',
     name: 'Day',
     props: true,
-    component: () => import(/* webpackChunkName: "about" */ '../views/Day.vue'),
+    component: () => import(/* webpackChunkName: "day" */ '../views/Day.vue'),
+  },
+  {
+    path: '/add-day',
+    name: 'AddDay',
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "add-day" */ '../views/AddDay.vue'),
   },
 ];
 

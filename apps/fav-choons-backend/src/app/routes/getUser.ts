@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { Request } from 'express';
 import { UserJsonResponse } from '@fav-choons/types';
-import { dateFormat } from '../constants';
+import { dateFormat } from '@fav-choons/constants';
 import db from '../db';
 
 export default async function getUser(

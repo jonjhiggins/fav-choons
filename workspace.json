@@ -1,6 +1,28 @@
 {
   "version": 2,
   "projects": {
+    "constants": {
+      "root": "libs/constants",
+      "sourceRoot": "libs/constants/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/constants/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/constants"],
+          "options": {
+            "jestConfig": "libs/constants/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "fav-choons-backend": {
       "root": "apps/fav-choons-backend",
       "sourceRoot": "apps/fav-choons-backend/src",
@@ -8,16 +30,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/fav-choons-backend",
             "main": "apps/fav-choons-backend/src/main.ts",
             "tsConfig": "apps/fav-choons-backend/tsconfig.app.json",
-            "assets": [
-              "apps/fav-choons-backend/src/assets"
-            ]
+            "assets": ["apps/fav-choons-backend/src/assets"]
           },
           "configurations": {
             "production": {
@@ -41,20 +59,14 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "apps/fav-choons-backend/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/fav-choons-backend/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/fav-choons-backend"
-          ],
+          "outputs": ["coverage/apps/fav-choons-backend"],
           "options": {
             "jestConfig": "apps/fav-choons-backend/jest.config.js",
             "passWithNoTests": true
@@ -101,16 +113,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/fav-choons-frontend/**/*.{ts,tsx,vue}"
-            ]
+            "lintFilePatterns": ["apps/fav-choons-frontend/**/*.{ts,tsx,vue}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/fav-choons-frontend"
-          ],
+          "outputs": ["coverage/apps/fav-choons-frontend"],
           "options": {
             "jestConfig": "apps/fav-choons-frontend/jest.config.js",
             "passWithNoTests": true
@@ -137,13 +145,9 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "apps/fav-choons-frontend-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/fav-choons-frontend-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -155,20 +159,14 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "libs/types/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/types/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/types"
-          ],
+          "outputs": ["coverage/libs/types"],
           "options": {
             "jestConfig": "libs/types/jest.config.js",
             "passWithNoTests": true
