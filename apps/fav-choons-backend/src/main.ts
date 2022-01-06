@@ -1,14 +1,14 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as helmet from 'helmet';
-import * as cors from 'cors';
+import express from 'express';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import cors from 'cors';
 import getUserDate from './app/routes/getUserDate';
 import addTrackForDate from './app/routes/createUserDate';
 import getUser from './app/routes/getUser';
 import getUsers from './app/routes/getUsers';
 
 const app = express();
-const serverPort = 3000;
+const serverPort = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

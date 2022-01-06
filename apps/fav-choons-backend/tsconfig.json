@@ -1,6 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
   "include": [],
   "references": [
     {
