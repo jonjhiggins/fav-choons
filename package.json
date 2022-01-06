@@ -6,7 +6,9 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "postinstall": "node node_modules/@nx-plus/vue/patch-nx-dep-graph.js"
+    "postinstall": "node node_modules/@nx-plus/vue/patch-nx-dep-graph.js",
+    "heroku-postbuild": "npx nx run fav-choons-backend:build",
+    "heroku-start": "node dist/apps/fav-choons-backend/main.js"
   },
   "private": true,
   "dependencies": {
