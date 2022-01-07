@@ -7,6 +7,7 @@ import addTrackForDate from './app/routes/createUserDate';
 import getUser from './app/routes/getUser';
 import getUsers from './app/routes/getUsers';
 import getHome from './app/routes/getHome';
+import authMiddleware from './app/middleware/auth';
 
 const app = express();
 const serverPort = process.env.PORT || 3000;
@@ -28,7 +29,7 @@ app.get('/user/:username', getUser);
 // app.delete('/user/:username', deleteUser)
 
 app.get('/user/:username/:date', getUserDate);
-app.post('/user/:username/:date', addTrackForDate);
+app.post('/user/:username/:date', authMiddleware, addTrackForDate);
 // app.put('/user/:username/:date', editUserDate)
 // app.delete('/user/:username/:date', deleteUserDate)
 
