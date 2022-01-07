@@ -6,6 +6,7 @@ import getUserDate from './app/routes/getUserDate';
 import addTrackForDate from './app/routes/createUserDate';
 import getUser from './app/routes/getUser';
 import getUsers from './app/routes/getUsers';
+import getHome from './app/routes/getHome';
 
 const app = express();
 const serverPort = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(helmet());
 
+app.get('/', getHome);
 app.get('/users', getUsers);
 app.get('/user/:username', getUser);
 // app.post('/user/:username', createUser)
