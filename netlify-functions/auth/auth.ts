@@ -6,24 +6,22 @@ export const handler: Handler = async (_event, context) => {
   const userID = user.sub;
   const userUrl = `${identity.url}/admin/users/${userID}`;
   const adminAuthHeader = `Bearer ${identity.token}`;
-  console.log(userUrl, adminAuthHeader);
   try {
     return axios(userUrl, {
       headers: { Authorization: adminAuthHeader },
     })
       .then(({ data }) => {
-        console.log('data', JSON.stringify(data));
-        return { statusCode: 204 };
+        return { statusCode: 200, body: JSON.stringify({ data }) };
       })
       .catch((error) => {
-        console.log('Failed to get user! 500! Internal.', error);
+        console.log('Failed to get user', error);
         return {
           statusCode: 500,
           body: `Internal Server Error: ${error}`,
         };
       });
   } catch (error) {
-    console.log('GOT HERE! 500! outer', error);
+    console.log('Unknown error trying to get user', error);
     return { statusCode: 500, body: `Internal Server Error: ${error}` };
   }
 };
