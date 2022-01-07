@@ -17,6 +17,14 @@ export default async function getUser(
 
   const result = await db.query(query, [username]);
   const dates = result.rows.map(({ date }) => format(date, dateFormat));
+
+  if (dates.length < 1) {
+    return response.status(404).json({
+      error: 'User not found',
+      ok: false,
+    });
+  }
+
   return response.status(200).json({
     data: { dates },
     ok: true,
