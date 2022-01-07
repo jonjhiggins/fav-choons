@@ -5,6 +5,7 @@
         class="bg-gray-700 text-white p-6 content-center font-mono shadow-lg rounded-xl mb-6"
         id="nav"
       >
+        <authentication></authentication>
         <h1 class="text-4xl text-center font-bold mt-3 mb-3">
           <router-link to="/">fav choons</router-link>
         </h1>
@@ -17,3 +18,13 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Authentication from './components/Authentication.vue';
+
+export default Vue.extend({
+  name: 'App',
+  components: { authentication: Authentication },
+});
+</script>
