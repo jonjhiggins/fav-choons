@@ -11,7 +11,7 @@ export const handler: Handler = async (_event, context) => {
     return axios(userUrl, {
       headers: { Authorization: adminAuthHeader },
     })
-      .then((data) => {
+      .then(({ data }) => {
         console.log('data', JSON.stringify(data));
         return { statusCode: 204 };
       })
